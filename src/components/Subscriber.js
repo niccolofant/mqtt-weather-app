@@ -1,10 +1,11 @@
-import { Button, Box, TextField, Typography, Grid } from "@mui/material";
+import { Button, Box, TextField, Typography, Grid, Alert } from "@mui/material";
 import { useState } from "react";
 
 const mqtt = require("mqtt");
 
 function Subscriber() {
   const [subscribers, addSubscriber] = useState([]);
+  const [error, setError] = useState(false);
   const [topic, setTopic] = useState("");
   const [id, setId] = useState("");
 
@@ -15,26 +16,29 @@ function Subscriber() {
     event.preventDefault();
 
     if (clientIds.indexOf("mqttjs_" + id) === -1) {
+      setError(false);
       const client = mqtt.connect("mqtt://localhost", {
         port: 8888,
         clean: false,
         clientId: "mqttjs_" + id,
       });
 
-      let output = [""];
-
       client.on("connect", () => {
         client.subscribe(topic, { qos: 1 });
         addSubscriber([...subscribers, client]);
       });
 
+      let output = [""];
+
       client.on("message", (topic, message) => {
+        console.log(typeof message);
         output.push(message);
 
         if (document.getElementById(client.options.clientId))
           document.getElementById(client.options.clientId).value = output;
       });
     } else {
+      setError(true);
       console.log("Cant connect with same id");
     }
   }
@@ -48,6 +52,18 @@ function Subscriber() {
       addSubscriber(copySubs);
     }
     item.end();
+  }
+
+  function downloadOutput(item) {
+    const element = document.createElement("a");
+    const file = new Blob(
+      [document.getElementById(item.options.clientId).value],
+      { type: "text/plain" }
+    );
+    element.href = URL.createObjectURL(file);
+    element.download = item.options.clientId + "_output.txt";
+    document.body.appendChild(element);
+    element.click();
   }
 
   return (
@@ -89,6 +105,11 @@ function Subscriber() {
               <Button type="submit" variant="contained" color="info">
                 add subscriber
               </Button>
+              {error ? (
+                <Alert severity="error" sx={{ margin: "1vw" }}>
+                  Can't connet with same Id
+                </Alert>
+              ) : null}
             </Grid>
           </Grid>
         </form>
@@ -127,6 +148,15 @@ function Subscriber() {
                       {Object.keys(item._resubscribeTopics)[0]}{" "}
                     </span>
                   </Typography>
+                  <Box sx={{ textAlign: "left", margin: "1vw 0 0 0" }}>
+                    <textarea
+                      name="result"
+                      cols="70"
+                      rows="5"
+                      id={item.options.clientId}
+                      defaultValue=""
+                    ></textarea>
+                  </Box>
                 </Box>
               </Grid>
               <Grid item xs={3}>
@@ -137,17 +167,14 @@ function Subscriber() {
                 >
                   Disconnect
                 </Button>
+                <Button
+                  sx={{ margin: "1vw 0 0 0" }}
+                  onClick={() => downloadOutput(item)}
+                >
+                  download output
+                </Button>
               </Grid>
             </Grid>
-            <Box sx={{ textAlign: "left" }}>
-              <textarea
-                name="result"
-                cols="70"
-                rows="5"
-                id={item.options.clientId}
-                defaultValue=""
-              ></textarea>
-            </Box>
           </div>
         );
       })}

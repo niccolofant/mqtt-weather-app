@@ -7,12 +7,14 @@ const socket = new WebSocket("ws://localhost:8888");
 
 function App() {
   const [connected, setConnected] = useState(false);
+
   socket.onopen = function () {
     setConnected(true);
   };
   socket.onerror = function () {
     setConnected(false);
   };
+
   return (
     <div className="App" style={{ padding: "1vw", fontFamily: "Nunito Sans" }}>
       <Grid container sx={{ dipslay: "flex", alignItems: "center" }}>
@@ -25,7 +27,7 @@ function App() {
           {connected ? (
             <Alert severity="success">MQTT Broker connected</Alert>
           ) : (
-            <Alert severity="error">MQTT Broker NOT connected</Alert>
+            <Alert severity="error">MQTT Broker disconnected</Alert>
           )}
         </Grid>
       </Grid>
