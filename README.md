@@ -1,7 +1,7 @@
 # MQTT Multichannel store and forward system 
 
 
-Simple publish/subscribe MQTT system implemented with React.js 
+Simple publish/subscribe MQTT system implemented with Node.js and React.js 
 
 ## Prerequisites
 - npm
