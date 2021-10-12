@@ -13,8 +13,8 @@ Simple publish/subscribe MQTT system implemented with React.js
 ## Installation
 
 This app requires [Node.js](https://nodejs.org/) v10+ to run.
-1) Get a free API Key at [OpenWeathermap](https://openweathermap.org/api) 
-2) Clone the respository
+1) Get a free API Key at [OpenWeatherMap](https://openweathermap.org/api) 
+2) Clone the repository
     ```sh
     git clone https://github.com/ocintnaf/mqtt-weather-app.git
     ```
