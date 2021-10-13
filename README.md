@@ -1,8 +1,7 @@
 # MQTT Multichannel store and forward system 
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://travis-ci.org/joemccann/dillinger)
 
-Simple publish/subscribe MQTT system implemented with React.js 
+Simple publish/subscribe MQTT system implemented with Node.js and React.js 
 
 ## Prerequisites
 - npm
