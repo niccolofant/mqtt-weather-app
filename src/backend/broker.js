@@ -1,3 +1,6 @@
+/**
+ * Funzione per far partire un server/broker MQTT su WebSocket
+ */
 const startBroker = () => {
   const aedes = require("aedes")();
   const httpServer = require("http").createServer();

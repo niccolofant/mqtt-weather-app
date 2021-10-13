@@ -8,6 +8,10 @@ function Publisher() {
   const [publishers, addPublisher] = useState([]);
   const [topic, setTopic] = useState("");
 
+  /**
+   * Funzione per far partire un Publisher
+   * @param event evento del click del mouse
+   */
   function startPublisher(event) {
     event.preventDefault();
 
@@ -33,6 +37,10 @@ function Publisher() {
     });
   }
 
+  /**
+   * Funzione per disconnettere un determinato Publisher
+   * @param item client Publisher che si vuole disconnettere
+   */
   function disconnectPublisher(item) {
     const copyPubs = [...publishers];
     const index = copyPubs.indexOf(item);

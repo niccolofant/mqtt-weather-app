@@ -12,6 +12,10 @@ function Subscriber() {
   let clientIds = [];
   subscribers.map((client) => clientIds.push(client.options.clientId));
 
+  /**
+   * Funzione per far partire un client Subscriber
+   * @param event evento del click del mouse
+   */
   function startSubscriber(event) {
     event.preventDefault();
 
@@ -43,6 +47,10 @@ function Subscriber() {
     }
   }
 
+  /**
+   * Funzione per disconnettere un determinato Subscriber
+   * @param item client Subscriber che si vuole disconnettere
+   */
   function disconnectSubscriber(item) {
     const copySubs = [...subscribers];
     const index = copySubs.indexOf(item);
@@ -54,6 +62,10 @@ function Subscriber() {
     item.end();
   }
 
+  /**
+   * Funzione per il salvataggio locale dei messaggi ricevuti
+   * @param item client Subscriber di cui si vogliono scaricare i messaggi ricevuti
+   */
   function downloadOutput(item) {
     const element = document.createElement("a");
     const file = new Blob(
